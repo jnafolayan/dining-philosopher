@@ -1,4 +1,5 @@
 const path = require("path")
+const HTMLWebpackPlugin = require("html-webpack-plugin")
 
 module.exports = {
   entry: "./src/index.js",
@@ -7,13 +8,17 @@ module.exports = {
     filename: "index.bundle.js",
   },
   devServer: {
-    port: 3000
+    port: 3000,
+    stats: {
+      children: false,
+      maxModules: 0
+    }
   },
   module: {
     rules: [
       {
         test: /\.js$/,
-        exclude: /(node_modules)/,
+        exclude: /node_modules/,
         use: {
           loader: "babel-loader",
           options: {
@@ -22,5 +27,8 @@ module.exports = {
         }
       }
     ]
-  }
+  },
+  plugins: [
+    new HTMLWebpackPlugin({ template: path.resolve(__dirname, "index.html") })
+  ]
 }
