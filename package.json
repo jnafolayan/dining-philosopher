@@ -1,0 +1,10 @@
+{
+  "name": "dining-philosopher",
+  "version": "1.0.0",
+  "description": "Simulation of the dining philosopher problem",
+  "main": "build/index.js",
+  "repository": "https://github.com/jnafolayan/dining-philosopher",
+  "author": "John Afolayan <jnafolayan@gmail.com>",
+  "license": "MIT",
+  "private": false
+}
