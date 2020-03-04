@@ -10,7 +10,8 @@ export default class Philosopher extends Entity {
     this.plateStroke = plateStroke
     this.foodRadius = plateRadius * 0.85
     this.foodColor = foodColor
-    this.eating = false
+    this.eating = 0
+    this.chops = []
     this.tick = 0
 
     this.foodCanvas
@@ -37,7 +38,9 @@ export default class Philosopher extends Entity {
     const { plateFill, foodRadius, foodContext: ctx } = this
     this.tick++
 
-    if (this.eating && this.tick % 60 == 0) {
+    this.eating = Math.max(0, this.eating - dt)
+
+    if (this.eating > 0 && this.tick % 60 == 0) {
       ctx.fillStyle = plateFill
       ctx.beginPath()
       const r = 5 + Math.random() * foodRadius * 0.3 | 0
@@ -66,9 +69,9 @@ export default class Philosopher extends Entity {
     } = this
     const { x, y } = this.position
 
-    if (!this.eating)
-      context.globalAlpha = 0.5
-
+    context.save()
+    context.shadowColor = plateFill
+    context.shadowBlur = 3
     context.fillStyle = plateFill
     context.strokeStyle = plateStroke
     context.lineWidth = plateThickness
@@ -76,11 +79,19 @@ export default class Philosopher extends Entity {
     context.arc(x, y, plateRadius, 0, 2 * Math.PI, false)
     context.fill()
     context.stroke()
+    context.restore()
 
     // food
     const offset = plateRadius - foodRadius - plateRadius
     context.drawImage(foodCanvas, x + offset, y + offset)
 
     context.globalAlpha = 1
+
+    if (this.eating == 0) {
+      context.beginPath()
+      context.arc(x, y, plateRadius, 0, 2 * Math.PI, false)
+      context.fillStyle = "rgba(50,50,50,0.85)"
+      context.fill()
+    }
   }
 }
