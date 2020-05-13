@@ -1,4 +1,4 @@
-import Vector from "../geom/Vector"
+import Vector from "../geom/Vector";
 
 /**
  * The base class for all world object. They essentially are renderable
@@ -8,14 +8,18 @@ import Vector from "../geom/Vector"
  */
 export default class Entity {
   constructor(x, y) {
-    this.position = new Vector(x, y)
+    this.position = new Vector(x, y);
   }
 
-  update(dt) {
-    
-  }
+  /**
+   * Updates an entity using its internal logic
+   * @param {number} dt The elapsed time in seconds between previous and current frames
+   */
+  update(dt) {}
 
-  render(context) {
-
-  }
+  /**
+   * Draws an element to the screen
+   * @param {CanvasRenderingContext2D} context
+   */
+  render(context) {}
 }
